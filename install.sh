@@ -8,7 +8,8 @@ if [[ $EUID -ne 0 ]]; then
         	exit 1
 fi
 
-
+apt-get update -y && apt-get upgrade -y
+clear
 if which airodump-ng >/dev/null; then
 		sleep 0.25
          echo -e "$blue(AIRODUMP-NG)$nc .................................................. Instalado [$green✓$nc]"
@@ -16,8 +17,8 @@ else
 		sleep 0.25
 	 echo -e "$red(AIRODUMP-NG)$nc No instalado [$red✗$nc]"
 			sleep 1
-#instalación mensaje
-apt-get install airckrack-ng
+
+apt-get install aircrack-ng -y
 fi
 
 
@@ -29,6 +30,24 @@ else
 		sleep 0.25
 	 echo -e "$red(MDK3)$nc  No instalado [$red✗$nc]"
 			sleep 1
-	 apt-get install mdk3
+	 apt-get install mdk3 -y
 		
 fi
+
+if which toilet >/dev/null; then
+		sleep 0.25
+         echo -e "$blue(Toilet)$nc ......................................................... Instalado [$green✓$nc]"
+		sleep 0.25
+else
+		sleep 0.25
+	 echo -e "$red(Toilet)$nc  No instalado [$red✗$nc]"
+			sleep 1
+	 apt-get install toilet -y
+		
+fi
+
+clear
+chmod +x routekill.sh
+echo -e "iniciando programa en 5 segundos"
+sleep 5
+bash routerkill.sh
