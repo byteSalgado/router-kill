@@ -17,6 +17,7 @@ else
 		sleep 0.25
 	 echo -e "$red(AIRODUMP-NG)$nc No instalado [$red✗$nc]"
 			sleep 1
+			apt-get install aircrack-ng -y
 
 apt-get install aircrack-ng -y
 fi
