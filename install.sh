@@ -20,7 +20,7 @@ else
 			sleep 1
 			apt-get install aircrack-ng -y
 
-apt-get install aircrack-ng -y
+
 fi
 
 
@@ -47,9 +47,21 @@ else
 	 apt-get install toilet -y
 		
 fi
+if which macchanger >/dev/null; then
+		sleep 0.25
+         echo -e "$blue(macchanger)$nc ......................................................... Instalado [$green✓$nc]"
+		sleep 0.25
+else
+		sleep 0.25
+	 echo -e "$red(macchanger)$nc  No instalado [$red✗$nc]"
+			sleep 1
+	 apt-get install macchanger -y
+		
+fi
+
 
 clear
-chmod +x routekill.sh
+chmod +x routerkill.sh
 echo -e "iniciando programa en 5 segundos"
 sleep 5
 bash routerkill.sh
