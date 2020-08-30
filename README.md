@@ -1,4 +1,4 @@
-De# router-kill
+# router-kill
 
 Herramienta bash para hacer ataques a un router
 
