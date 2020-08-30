@@ -51,6 +51,7 @@ echo -e "$red(AIRMONG-NG)$nc No instalado [$red✗$nc]"
 sleep 1
 echo "Instala escribiendo [sudo apt-get install airckrack-ng]"
 sleep 0.25
+exit 1
 fi
 
 if which airodump-ng >/dev/null; then
@@ -61,6 +62,7 @@ sleep 0.25
 echo -e "$red(AIRODUMP-NG)$nc No instalado [$red✗$nc]"
 sleep 1
 echo "Instala escribiendo [sudo apt-get install airckrack-ng]"
+exit 1
 fi
 
 if which mdk3 >/dev/null; then
@@ -76,7 +78,7 @@ exit 1
 fi
 
 #macchanger
-if which mdk3 >/dev/null; then
+if which macchanger >/dev/null; then
 sleep 0.25
 echo -e "$blue(MACCHANGER)$nc ................................................... Instalado [$green✓$nc]"
 sleep 0.25
