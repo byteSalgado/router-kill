@@ -7,6 +7,7 @@ Herramienta bash para hacer ataques a un router
 * Ataque Auth: manda paquetes ARP con falsa autenticacion en el router, este ataque puede saturar el router
 * Ataque Deauth: Desauntentica a todos los clientes dentro de la red
 * Ataque flood Access Point: Realiza un flood de redes WIFI
+* Ataque Capturar Handshake: Captura el Handshake de la red solicitada.
 
 # Dependencias:
 
