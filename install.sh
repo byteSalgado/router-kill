@@ -76,6 +76,7 @@ fi
 
 clear
 chmod +x routerkill.sh
+mkdir handshake
 echo -e "iniciando programa en 5 segundos"
 sleep 5
 bash routerkill.sh
