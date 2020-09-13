@@ -49,8 +49,11 @@ b="Flood Fake Point"
 c="Auth"
 d="Detener Monitor Mode"
 e="Capturar Handshake"
+update="Update Program"
 f="Salir"
 
+#directory verification
+directory=$(pwd)
 
 #verificacion de Dependencias by Hacking.con.H
 
@@ -139,7 +142,7 @@ PS3="Selecciona una Opcion: "
 function menu_principal(){
 echo
 echo
-select menu in "$a" "$b" "$c" "$d" "$e" "$f";
+select menu in "$a" "$b" "$c" "$d" "$e" "$update" "$f";
 do
 case $menu in 
 
@@ -398,6 +401,19 @@ menu_principal
 
 ;;
 
+$update)
+
+if [ -e $directory/routerkill.sh ]
+then
+rm $directory/routerkill.sh
+fi
+echo -e "$nc($blue*$nc)$green Actualizando programa.. en 5 segundos.."
+sleep 5
+curl https://raw.githubusercontent.com/byteSalgado/router-kill/master/routerkill.sh > routerkill.sh
+echo -e "$nc($blue*$nc)$green Programa Actualizado.. vuelva a ejecutarlo nuevamente.."
+sleep 3
+exit
+;;
 $f)
 
 airmon-ng stop wlan0mon
