@@ -73,6 +73,20 @@ else
 		
 fi
 
+if which ruby >/dev/null; then
+		sleep 0.25
+         echo -e "$blue(ruby)$nc ......................................................... Instalado [$green✓$nc]"
+		sleep 0.25
+	       gem install lolcat
+else
+		sleep 0.25
+	 echo -e "$red(macchanger)$nc  No instalado [$red✗$nc]"
+			sleep 1
+	 apt-get install ruby -y
+	 gem install lolcat
+		
+fi
+
 
 clear
 chmod +x routerkill.sh
