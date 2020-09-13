@@ -39,6 +39,30 @@ exit
 }
 
 
+case `dpkg --print-architecture` in
+aarch64)
+echo -e "$red(error)$blue el script solo soporta arquitectura$red AMD 64$blue Sistemas debian y deribados [$red✗$nc]"
+exit
+;;
+arm)
+echo -e "$red(error)$blue el script solo soporta arquitectura$red AMD 64$blue Sistemas debian y deribados [$red✗$nc]"
+exit
+;;
+armhf)
+echo -e "$red(error)$blue el script solo soporta arquitectura$red AMD 64$blue Sistemas debian y deribados [$red✗$nc]"
+exit
+;;
+
+i*86)
+echo -e "$red(error)$blue el script solo soporta arquitectura$red AMD 64$blue Sistemas debian y deribados [$red✗$nc]"
+exit
+;;
+x86_64)
+echo -e "$red(error)$blue el script solo soporta arquitectura$red AMD 64$blue Sistemas debian y deribados [$red✗$nc]"
+exit
+;;
+esac
+
 
 
 
