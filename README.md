@@ -9,6 +9,17 @@ Herramienta bash para hacer ataques a un router
 * Ataque flood Access Point: Realiza un flood de redes WIFI
 * Ataque Capturar Handshake: Captura el Handshake de la red solicitada.
 
+
+## Distribuciones compatibles con Router-kill:
+
+| Distribución |   Estado      |
+|--------------|---------------| 
+| Kali Linux   | Compatible    |
+| Ubuntu       | Compatible    |
+| Xbuntu       | Compatible    |
+| Debian       | Compatible    |
+| Parrot OS    | Compatible    |
+
 # Dependencias:
 
 * Aircrack-ng
