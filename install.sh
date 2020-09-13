@@ -16,6 +16,36 @@ blue="\033[1;34m"
 nc="\e[0m"
 clear
 
+
+case `dpkg --print-architecture` in
+aarch64)
+echo -e "$red(error)$blue el script solo soporta arquitectura$red AMD 64$blue Sistemas debian y deribados [$red✗$nc]"
+exit
+;;
+arm)
+echo -e "$red(error)$blue el script solo soporta arquitectura$red AMD 64$blue Sistemas debian y deribados [$red✗$nc]"
+exit
+;;
+armhf)
+echo -e "$red(error)$blue el script solo soporta arquitectura$red AMD 64$blue Sistemas debian y deribados [$red✗$nc]"
+exit
+;;
+
+i*86)
+echo -e "$red(error)$blue el script solo soporta arquitectura$red AMD 64$blue Sistemas debian y deribados [$red✗$nc]"
+exit
+;;
+x86_64)
+echo -e "$red(error)$blue el script solo soporta arquitectura$red AMD 64$blue Sistemas debian y deribados [$red✗$nc]"
+exit
+;;
+esac
+
+
+
+
+
+
 if [[ $EUID -ne 0 ]]; then	
 	echo "														         "
 	echo " 			(✗) No eres usuario root, para ejecutar la heramienta tienes que ejecutarla siendo root (✗)      "				  
