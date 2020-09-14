@@ -29,10 +29,14 @@ Herramienta bash para hacer ataques a un router
 
 # Dependencias:
 
-* Aircrack-ng
-* mdk3
-* Macchanger
-* toilet
+| Dependencias nesesarias | 
+|-------------------------|
+| Aireplay-ng             | 
+| Mdk3                    | 
+| Macchanger              | 
+| Toilet                  |
+
+
 
 # Instalacion:
 
