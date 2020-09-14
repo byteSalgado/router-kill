@@ -12,6 +12,11 @@
 <a href="https://paypal.me/facukaku021"><img title="Paypal" src="https://img.shields.io/badge/Donate-PayPal-green.svg?style=for-the-badge&logo=paypal"></a>
 </p>
 
+<p align="center">
+<a href="mailto:facundosalgado017@gmail.com"><img title="Correo" src="https://img.shields.io/badge/Correo-facundosalgado017%gmail.com-blueviolet?style=for-the-badge&logo=gmail"></a>
+<a href="https://t.me/facukaku021"><img title="Chat" src="https://img.shields.io/badge/CHAT-TELEGRAM-blue?style=for-the-badge&logo=telegram"></a>
+</p>
+
 **Router-kill** es un framework diseñado para automatizar el proceso para atacar un router de diferentes maneras. Actualmente las redes WIFI siguen siendo vulnerables a estos ataques y este pequeño programa en BASH ayuda a automatizar a realizar dichos ataques, trabaja principalmente con dependencias muy famosas en distribuciones como **Kali Linux** o **Parrot Security OS**
 
 
