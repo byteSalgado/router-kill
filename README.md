@@ -18,6 +18,7 @@
 | Auth          | Solicita y manda solicitudes falsas de Auth   |
 | Fake AP       | Crea un flood de Falsos puntos de acceso      |
 | Inject packet | Autentica un falso cliente y Inyecta paquetes |
+| Handshaske    | Captura el Handshake de la red solicitada     |
 
 ## Distribuciones compatibles con Router-kill:
 
