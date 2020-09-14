@@ -2,13 +2,15 @@
 
 Herramienta bash para hacer ataques a un router
 
-# Tipos de Ataques
 
-* Ataque Auth: manda paquetes ARP con falsa autenticacion en el router, este ataque puede saturar el router
-* Ataque Deauth: Desauntentica a todos los clientes dentro de la red
-* Ataque flood Access Point: Realiza un flood de redes WIFI
-* Ataque Capturar Handshake: Captura el Handshake de la red solicitada.
+## Tipos de Ataques
 
+| Ataque        |   Informacion                                 |
+|---------------|-----------------------------------------------| 
+| Deauth:       | Desauntentica todos los clientes de la red    |
+| Auth          | Solicita y manda solicitudes falsas de Auth   |
+| Fake AP       | Crea un flood de Falsos puntos de acceso      |
+| Inject packet | Autentica un falso cliente y Inyecta paquetes |
 
 ## Distribuciones compatibles con Router-kill:
 
