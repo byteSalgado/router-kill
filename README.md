@@ -13,7 +13,7 @@
 </p>
 
 <p align="center">
-<a href="mailto:facundosalgado017@gmail.com"><img title="Correo" src="https://img.shields.io/badge/Correo-facundosalgado017%gmail.com-blueviolet?style=for-the-badge&logo=gmail"></a>
+<a href="mailto:facundosalgado017@gmail.com"><img title="Correo" src="https://img.shields.io/badge/Correo-facundosalgado017@gmail.com-blueviolet?style=for-the-badge&logo=gmai"></a>
 <a href="https://t.me/facukaku021"><img title="Chat" src="https://img.shields.io/badge/CHAT-TELEGRAM-blue?style=for-the-badge&logo=telegram"></a>
 </p>
 
