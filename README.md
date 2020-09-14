@@ -38,14 +38,14 @@ Herramienta bash para hacer ataques a un router
 
 
 
-### Instalación 🔧
+## Instalacion 🔧
 
 * git clone https://github.com/byteSalgado/router-kill/
 * cd router-kill
 * chmod +x install.sh
 * ./install.sh
 
-# Creditos:
+## Creditos:
 
 * Facu Salgado (ByteSalgado)
 * Regalanos una estrella en el repositorio, gracias.
