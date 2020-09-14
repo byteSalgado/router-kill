@@ -1,11 +1,10 @@
-<p align="center">#router-kill</p>
+
 
 
 Herramienta bash para hacer ataques a un router
 
 <p align="center">
-<a href="https://github.com/AdrMXR"><img title="Autor" src="https://img.shields.io/badge/Author-Adrián%20Guillermo-blue?style=for-the-badge&logo=github"></a>
-<a href=""><img title="Version" src="https://img.shields.io/badge/Version-1.3.0-red?style=for-the-badge&logo="></a>
+<a href="https://github.com/byteSalgado"><img title="Autor" src="https://img.shields.io/badge/Author-Adrián%20Guillermo-blue?style=for-the-badge&logo=github"></a>
 </p>
 
 
