@@ -68,5 +68,3 @@
 
 * Facu Salgado (ByteSalgado)
 * Regalanos una estrella en el repositorio, gracias.
-* Creditos por parte del codigo;
-* (hacking.con.h) https://github.com/hackingconh
