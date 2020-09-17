@@ -529,16 +529,25 @@ menu_principal
 
 $update)
 
+echo -e "$nc($azul*$nc)$verde Comprobando estado internet.. please wait.."
+sleep 4
+if ping -q -w 1 -c 1 google.com > /dev/null; then
+echo -e "$nc($azul*$nc)$verde Actualizando programa.. en 5 segundos.."
+sleep 5 
 if [ -e $directory/routerkill.sh ]
 then
 rm $directory/routerkill.sh
 fi
-echo -e "$nc($azul*$nc)$verde Actualizando programa.. en 5 segundos.."
-sleep 5
 curl https://raw.githubusercontent.com/byteSalgado/router-kill/master/routerkill.sh > routerkill.sh
-echo -e "$nc($azul*$nc)$verde Programa Actualizado.. vuelva a ejecutarlo nuevamente.."
-sleep 3
-exit
+echo -e "$nc($azul*$nc)$verde Programa Actualizado.. vuelva a ejecutarlo nuevamente..$nc"
+sleep 2
+exit                                                                                                                                                                
+else 
+echo
+echo
+echo -e "$nc($azul*$nc)$verde Internet no disponible.. saliendo..$nc" 
+exit                                                                                                                                                              
+fi       
 ;;
 $f)
 
