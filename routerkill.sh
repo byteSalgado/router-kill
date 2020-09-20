@@ -91,8 +91,22 @@ c=$'\e[1;35mAuth Atttack\e[01;32m'
 new=$'\e[1;35mInject Packets\e[01;32m'
 d=$'\e[1;35mStop monitor mode\e[01;32m'
 e=$'\e[1;35mCapture Handshake\e[01;32m'
+new2=$'\e[1;35mWeb Attacks\e[01;32m'
 update=$'\e[1;35mUpdate Program\e[01;32m'
 f=$'\e[1;35mExit Program\e[01;32m'
+
+
+#opciones MENU
+
+w1=$'\e[1;35mClonar sitio\e[01;32m'
+w2=$'\e[1;35mFind panel\e[01;32m'
+w3=$'\e[1;35mCheck SQLI\e[01;32m'
+w4=$'\e[1;35mBack menu\e[01;32m'
+
+
+wyes=$'\e[1;35mClonar Index\e[01;32m'
+wno=$'\e[1;35mClonar web entera\e[01;32m'
+wback=$'\e[1;35mBack Menu\e[01;32m'
 
 #directory verification
 directory=$(pwd)
@@ -171,7 +185,7 @@ fi
 clear
 toilet --filter border Router Kill | lolcat
 echo
-echo -e "$violeta2(*)$azul Router Kill$rojo v2.0$azul"
+echo -e "$violeta2(*)$azul Router Kill$rojo v3.0$azul"
 sleep 2
 echo -e "$violeta2(*)$azul Script creado por$rojo Facu Salgado"
 sleep 1
@@ -180,12 +194,299 @@ echo -e "$violeta2(*)$azul Regalanos una estrella en github$verde"
 export PS3=$'\e[01;35m(*)\e[01;32m Elige una Opcion:\e[01;33m '
 
 
+
+
+function verificarsqli(){
+sleep 1
+echo -e "$violeta2(*)$azul Esta funcion le permitira saber si un sitio es vulnerable a$rojo SQL Injection"
+sleep 3
+echo
+echo
+echo -e "$violeta2(*)$azul Debe ingresar la pagina de la siguiente manera:"
+echo -e "$violeta2(*)$azul You need to enter the page as follows:"
+sleep 3
+echo -e "$violeta2(*)$azul Ejemplo:$rojo dominio.com$violeta2/pagina.php?parametro=1"
+echo -e "$violeta2(*)$azul Example:$rojo domain.com$violeta2/page.php?parameter=1"
+sleep 3
+echo
+echo
+echo -e "$violeta2(*)$azul Example:$rojo domain.com$violeta2/login.php?id=1"
+echo -e "$violeta2(*)$azul Ejemplo:$rojo domain.com$violeta2/login.php?id=1"
+sleep 2
+echo
+echo
+printf "\e[01;35m Escriba la pagina:\e[01;32m "
+read page
+echo
+echo -e "$purpura(*)$blue verificando$rojo SQLI VULNERABILITY$azul Please Wait.."
+sleep 4
+
+
+#solicitud GET al sitio
+dork="'"
+i2=0
+sqli=$(curl -H "Accept: application/xml" -H "Content-Type: application/xml" --silent -X GET "$page$dork")
+
+#Verification fallas SQL en la consulta GET
+
+if  echo "$sqli" | grep -q -i "You have an error in your SQL syntax"; then
+i2=$((i2+1))
+fi
+
+if  echo "$sqli" | grep -q -i "mysql_fetch_array"; then
+i2=$((i2+1))
+fi
+
+if  echo "$sqli" | grep -q -i "mysqli_fetch_array"; then
+i2=$((i2+1))
+fi
+
+if  echo "$sqli" | grep -q -i "mysql_num_rows"; then
+i2=$((i2+1))
+fi
+
+if  echo "$sqli" | grep -q -i "Warning: mysq"; then
+i2=$((i2+1))
+fi
+
+#Verification Variable C si es mayor a 0 significa que es vulnerable
+
+if [[ $i2 > 0 ]]
+then
+echo
+echo
+echo -e "$azul Pagina$violeta2 $page$verde Is vulnerable a$azul SQLI Injection$verde"
+else
+echo
+echo
+echo -e "$azul Pagina$violeta2 $page$rojo Is not vulnerable a$azul SQLI Injection$verde"
+sleep 2
+fi
+menu_principal
+}
+
+
+
+
+
+function obtenerpanel(){
+
+#Verifica el archivo de directorios para el ataque
+
+if [ -e $directory/directorys.txt ]
+then
+echo
+else
+curl https://raw.githubusercontent.com/byteSalgado/router-kill/master/directorys.txt > $directory/directorys.txt
+fi
+echo -e "$violeta2(*)$azul Debe ingresar la pagina de la siguiente manera:"
+echo -e "$violeta2(*)$azul You need to enter the page as follows:"
+sleep 3
+echo
+echo
+echo -e "$violeta2(*)$azul Ejemplo:$rojo dominio.com"
+echo -e "$violeta2(*)$azul Example:$rojo domain.com"
+sleep 3
+echo
+echo
+echo -e "$violeta2(*)$azul No debe incluir subdirectorios como por ejemplo:$rojo dominio.com/hola/"
+echo -e "$violeta2(*)$azul It should not include subdirectories such as:$rojo domain.com/hello/"
+sleep 4
+echo
+echo
+echo -e "$violeta2(*)$azul Tampoco debe incluir ninguna barra diagonal$rojo(/)"
+echo -e "$violeta2(*)$azul It also must not include any forward slashes$rojo(/)"
+sleep 4
+echo
+echo
+printf "\e[01;35m Escriba la pagina/domain:\e[01;32m "
+read pagina
+
+while read line
+do
+
+
+#obtiene codigo de respuesta y lo guarda en la variable result
+
+result=$(curl -s -I "$pagina/$line" | head -n 1 | awk '{print $2}')
+
+#inicia variable en 0
+i=0
+
+#si el codigo respuesta es 200 o 302 le suma +1 a la variable
+
+if [[ "$result" == "200" ]]; then
+i=$((i+1))
+elif [[ "$result" == "302" ]]; then
+i=$((i+1))
+fi
+
+#si la variable es mayor a 0 significa que el panel fue encontrado.
+
+if [[ $i > 0 ]]
+then
+echo -e "$azul Pagina$rojo $pagina$violeta2/$line$verde Found"
+sleep 2
+echo
+echo -e "$azul Posible panel de la pagina: $verde$pagina/$line$verde"
+sleep 3
+echo
+echo
+break
+else
+echo -e "$azul Pagina$rojo $pagina$violeta2/$line$rojo Not Found"
+fi
+done < $directory/directorys.txt
+echo -e "$violeta2(*)$azul volviendo al menu principal.."
+sleep 3
+menu_principal
+}
+
+function webmenu(){
+
+
+select webmenu in "$w1" "$w2" "$w3" "$w4";
+do
+case $webmenu in
+$w1)
+echo
+echo
+echo -e "$violeta2(*)$azul Verificando estado$verde apache2"
+sleep 2
+#check Apache
+if which apache2 >/dev/null; then
+sleep 1
+echo -e "$azul(apache2)$verde Instalado"
+else
+sleep 1
+echo -e "$azul(apache2)$verde No instalado"
+sleep 2
+echo -e "$azul(apache2)$verde Instalando apache2 en 5 segundos.."
+sleep 5
+apt-get install apache2 -y
+clear
+fi
+echo -e "$violeta2(*)$azul A continuacion escoga si desea clonar el index o el sitio entero..$verde"
+sleep 3
+echo
+echo
+select tipoclone in "$wyes" "$wno" "$wback";
+do 
+case $tipoclone in
+$wyes)
+if [ -e $directory/index.html ]
+then
+rm $directory/index.html
+fi
+echo
+echo
+echo -e "$violeta2(*)$azul A continuacion ingrese el sitio web sin subdominios"
+sleep 3
+echo -e "$violeta2(*)$azul Ejemplo:$rojo mipagina.com"
+sleep 2
+printf "\e[01;35m Escriba el sitio/domain:\e[01;32m "
+read targetwebsite
+echo -e "$violeta2(*)$azul Clonando Website:$rojo $targetwebsite$azul Please wait.."
+sleep 3
+curl --silent $targetwebsite >> $directory/index.html
+mv $directory/index.html /var/www/html/
+sleep 1
+echo -e "$violeta2(*)$azul Sitio web:$rojo $targetwebsite$azul Clonado exitosamente..."
+sleep 3
+echo -e "$violeta2(*)$azul para ver el sitio dirigase a su navegador y coloque$violeta2 http://localhost$verde"
+sleep 3
+echo -e "$violeta2(*)$azul Volviendo al menu principal..$verde"
+sleep 2
+menu_principal
+;;
+
+$wno)
+rm -rf /var/www/html/*
+sleep 1
+echo -e "$violeta2(*)$azul esta opcion clonara el sitio web entero de RAIZ.."
+sleep 3
+echo
+echo
+echo -e "$violeta2(*)$azul A continuacion ingrese el sitio web sin subdominios"
+sleep 3
+echo -e "$violeta2(*)$azul Ejemplo:$rojo mipagina.com"
+sleep 2
+printf "\e[01;35m Escriba el sitio/domain:\e[01;32m "
+read targetwebsite2
+echo -e "$violeta2(*)$azul Clonando Website:$rojo $targetwebsite2$azul Please wait.."
+sleep 3
+cd /var/www/html
+wget -q --header="Accept: text/html" --user-agent="Mozilla/5.0 (X11; Linux amd64; rv:32.0b4) Gecko/20140804164216 ArchLinux KDE Firefox/32.0b4" --referer=http://www.google.com -r $targetwebsite2 -e robots=off -k
+cd $directory
+echo -e "$violeta2(*)$azul sitio web$rojo $targetwebsite2$azul clonado exitosamente.."
+sleep 3
+echo -e "$violeta2(*)$azul para ver el sitio dirigase a su navegador y coloque$violeta2 http://localhost$verde"
+sleep 3
+echo -e "$violeta2(*)$azul Volviendo al menu principal..$verde"
+sleep 2
+menu_principal
+
+;;
+
+$wback)
+echo -e "$violeta2(*)$azul Volviendo al menu principal..$verde"
+sleep 3
+menu_principal
+;;
+*)
+echo -e "$rojo(ERROR)$azul $REPLY $verde Opcion no valida $verde"
+;;
+esac
+done
+;;
+
+$w2)
+echo -e "$violeta2(*)$azul Please wait..$verde"
+sleep 3
+obtenerpanel
+;;
+
+$w3)
+
+echo -e "$violeta2(*)$azul Please wait..$verde"
+sleep 3
+verificarsqli
+;;
+$w4) 
+echo -e "$violeta2(*)$azul Volviendo al menu principal..$verde Please wait.."
+sleep 3
+menu_principal
+;;
+*)
+echo -e "$rojo(ERROR)$azul $REPLY $verde Opcion no valida $verde"
+;;
+esac
+done
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #menu principal
 
 function menu_principal(){
 echo
 echo
-select menu in "$a" "$b" "$c" "$new" "$d" "$e" "$update" "$f";
+select menu in "$a" "$b" "$c" "$new" "$d" "$e" "$new2" "$update" "$f";
 do
 case $menu in 
 
@@ -524,6 +825,15 @@ airmon-ng stop $interface$mon
 menu_principal
 
 
+
+;;
+
+$new2)
+echo -e "$nc($azul*$nc)$verde Please wait.."
+sleep 3
+echo
+echo
+webmenu
 
 ;;
 
