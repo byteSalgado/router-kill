@@ -4,7 +4,7 @@
 
 <p align="center">
 <a href="https://github.com/bytesalgado"><img title="Autor" src="https://img.shields.io/badge/Author-Facu%20Salgado-blue?style=for-the-badge&logo=github"></a>
-<a href=""><img title="Version" src="https://img.shields.io/badge/Version-2.0-red?style=for-the-badge&logo="></a>
+<a href=""><img title="Version" src="https://img.shields.io/badge/Version-3.0-red?style=for-the-badge&logo="></a>
 </p>
 
 <p align="center">
@@ -29,6 +29,14 @@
 | Fake AP       | Crea un flood de Falsos puntos de acceso      |
 | Inject packet | Autentica un falso cliente y Inyecta paquetes |
 | Handshaske    | Captura el Handshake de la red solicitada     |
+
+## Funciones Web Attacks v3.0
+
+| Ataque        |   Informacion                                 |
+|---------------|-----------------------------------------------| 
+| Find Panel    | Encuentra el panel administrativo de un sitio |
+| Clone page    | Clona un sitio web index o sitio completo.    |
+| Check SQLI    | Verifica si un sitio es vulnerable a SQLI     |
 
 ## Distribuciones compatibles con Router-kill:
 
